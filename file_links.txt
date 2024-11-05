@@ -1,9 +1,14 @@
-Link to image 1:
+Link for image 1:
 
-https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption-featured.webp
+https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption1.webp
 
 
-Link 2 image 2:
+Link for image 2:
 
-https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption-feature.webp
+https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption2.webp
+
+
+Link for image 3:
+
+https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption3.webp
 
