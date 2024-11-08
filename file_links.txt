@@ -6,20 +6,20 @@
       <h2>Image 1</h2>
     
     <img src="https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption1.webp">
-      <p>Nice day for some yoga!</p>
+      <p>Caption here</p>
     </article>
     
         <article>
       <h2>Image 3</h2>
     
     <img src="https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption2.webp">
-      <p>Excuse me, driver, can you hurry up? I am late for a meeting!</p>
+      <p>Caption here</p>
     </article>
     
       <article>
       <h2>Image 2</h2>
     
     <img src="https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption3.webp">
-      <p>Let's talk about the elephant on the plane.</p> 
+      <p>Caption here</p> 
     </article>
 
