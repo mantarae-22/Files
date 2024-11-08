@@ -23,21 +23,3 @@
       <p>Let's talk about the elephant on the plane.</p> 
     </article>
 
-
-
-
-
-Link for image 1:
-
-https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption1.webp
-
-
-Link for image 2:
-
-https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption2.webp
-
-
-Link for image 3:
-
-https://raw.githubusercontent.com/mantarae-22/Files/refs/heads/main/funnycaption3.webp
-
