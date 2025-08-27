@@ -1,3 +1,23 @@
+# Configuration Code - Skip ahead to Main Program UI
+import importlib
+import subprocess
+import sys
+
+# List of required packages
+required_packages = ["customtkinter", "matplotlib"]
+
+# Function to check and install missing packages
+def install_if_missing(package):
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        print(f"{package} not found. Installing...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Check all required packages
+for pkg in required_packages:
+    install_if_missing(pkg)
+
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -10,14 +30,18 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # ******** Customize ******** 
 # Step 1: choose the appearance and theme
-ctk.set_appearance_mode("")  # Options: "Light", "Dark", "System"
-ctk.set_default_color_theme("")  # Options: "blue", "dark-blue", "green"
+# Example: ctk.set_appearance_mode("Dark")
+ctk.set_appearance_mode("Dark")  # Options: "Light", "Dark", "System"
+
+# Example: ctk.set_appearance_mode("blue")
+ctk.set_default_color_theme("blue")  # Options: "blue", "dark-blue", "green"
 
 # Create main window
 app = ctk.CTk()
 
 # ******** Customize ******** 
 # Step 2: choose a title for the app
+# Example: app.title("Tony's Space App")
 app.title("") # add your name and a space-themed title for the app in between the ""
 
 # Set the window size
@@ -50,13 +74,13 @@ def cs_calc_travel_to_space():
     #speed = int(txt_cs_speed.get())
 
 	# Step 3: Calculate the time it would take to travel using the formula: time = distance / speed
-    #time = distance / speed
+    #time_hours = distance / speed
 
 	# Step 4: Convert time from hours to days using the formula = time_days = time / 24
-    #time_days = time / 24
+    #time_days = time_hours / 24
 	
 	# Step 5: Print the result on the label on the form
-    #lbl_cs_time_output.configure(text=f"Number of days: {time_days:.2f}")
+    lbl_cs_time_output.configure(text=f"Number of days: {time_days:.2f}")
 
 
 ###########################################################################
@@ -82,20 +106,20 @@ def ds_build_space_graph():
     fig, axis = plt.subplots(figsize=(8, 6), dpi=100)
     
  # ******** Customize ******** 
-	# Step 1: Add the planets and distances to the graph        
-    axis.bar(planets, distances_miles, color='skyblue')
-
+	# Step 1: Customize the color of the bars on the graph 
+	# Example: axis.bar(planets, distances_miles, color="blue")
+    axis.bar(planets, distances_miles, color="")
   
-    # Step 2: Set the title using axis.set_title("")
-    # Example text: Average Distance from Earth to Planets
+    # Step 2: Set the title using axis.set_title("")    
+    # Example: axis.set_title("Average Distance from Earth to Planets")
     axis.set_title("")
     
-    # Step 3: Set the y label using axis.set_ylabel("")
-    # Example text: Distance (million miles)
+    # Step 3: Set the y label using axis.set_ylabel("")    
+    # Example: axis.set_ylabel("Distance (million miles)")
     axis.set_ylabel("")
     
-    # Step 4: Set the x label using axis.set_xlabel("")
-    # Example text: Planets
+    # Step 4: Set the x label using axis.set_xlabel("")    
+    # Example: axis.set_xlabel("Planets")
     axis.set_xlabel("")
 
     # Embed the plot in the tab
@@ -151,12 +175,14 @@ def classify_space_object(description):
         return "That sounds like a comet!"
 # ******** Customize ********        
     # Step 2 - think of words that describe Earth and list them here
-    # list words: 
+    # Example list of words: "ocean", "trees", "cities"
     
     # Step 3: add your words here and then remove the #
+    # Example: elif any(word in description for word in ["ocean", "trees", "cities"]):
     #elif any(word in description for word in []):
     
     # Step 4 come up with text to alert the user that they have thought of Earth and add between the "" and remove the #
+    #	 Example: return "You must be thinking of Earth!"
     #    return ""
     
     else:
