@@ -1,4 +1,4 @@
-# Configuration Code - Skip ahead to Main Program UI
+# Configuration Code to install missing packages - Skip ahead to Main Program UI
 import importlib
 import subprocess
 import sys
@@ -8,24 +8,46 @@ required_packages = ["customtkinter", "matplotlib"]
 
 # Function to check and install missing packages
 def install_if_missing(package):
-    try:
-        importlib.import_module(package)
-    except ImportError:
-        print(f"{package} not found. Installing...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+	try:
+		importlib.import_module(package)
+	except ImportError:
+		print(f"{package} not found. Installing...")
+		subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 # Check all required packages
 for pkg in required_packages:
-    install_if_missing(pkg)
+	install_if_missing(pkg)
 
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+# Function to ensure input is a number
+def validate_input(txt_entry):
+	"""
+	Validates the distance input from a CustomTkinter entry widget.
+	
+	Returns:
+		int: The input if valid, otherwise 0
+	"""
+	user_input = txt_entry.get().strip()
+
+	try:
+		int_user_input = int(user_input)
+
+		if int_user_input < 0:
+			raise ValueError("Distance cannot be negative")
+
+		# If valid → clear error and return distance
+		return int_user_input
+
+	except ValueError:
+		return 0
+
 ###########################################################################
 # Main Program UI
 ###########################################################################
-           
+		   
 # Set appearance and theme
 
 # ******** Customize ******** 
@@ -63,24 +85,29 @@ tabview.add("Artificial Intelligence")
 
 # This function calculates how long it would take to travel to space based on distance and speed input.
 def cs_calc_travel_to_space():
-    # ******** Customize ********
+	# ******** Customize ********
 
-	# Step 1: Get the distance that the user entered using txt_cs_distance.get()
-	# create a variable and set the value as the distance and convert it to a whole number (int)
-    #distance = int(txt_cs_distance.get())
+	# Step 1: Get the distance that the user entered after calling a function to handle invalid inputs
+	#distance = validate_input(txt_cs_distance)
 
-    # Step 2: Get the speed that the user entered using txt_cs_speed.get()
-	# create a variable and set the value as the distance and convert it to a whole number (int)
-    #speed = int(txt_cs_speed.get())
+	# Step 2: Get the speed that the user entered after calling a function to handle invalid inputs
+	#speed = validate_input(txt_cs_speed)
 
-	# Step 3: Calculate the time it would take to travel using the formula: time = distance / speed
-    #time_hours = distance / speed
+	# Step 3: If distance and speed are great than 0, calculate the time it would take to travel using the formula: time = distance / speed
+	if (distance > 0 and speed > 0):
+		time_hours = distance / speed
 
-	# Step 4: Convert time from hours to days using the formula = time_days = time / 24
-    #time_days = time_hours / 24
+		# Step 4: Convert time from hours to days using the formula = time_days = time / 24
+		#time_days = time_hours / 24
 	
-	# Step 5: Print the result on the label on the form
-    lbl_cs_time_output.configure(text=f"Number of days: {time_days:.2f}")
+		# Step 5: Print the result on the label on the form
+		lbl_cs_time_output.configure(text=f"Number of days: {time_days:.2f}")
+		
+		# Clear error message
+		lbl_cs_error.configure(text="")
+	else:
+		# Show message if either or both inputs are 0
+		lbl_cs_error.configure(text="Please enter a valid positive number.")
 
 
 ###########################################################################
@@ -89,43 +116,43 @@ def cs_calc_travel_to_space():
 
 # Function to display the graph
 def ds_build_space_graph():
-    # Space data to graph: average distances from Earth to planets (in millions of km)
-    planets = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
-    distances_miles = [
-        48.0,      # Mercury
-        25.7,      # Venus
-        48.7,      # Mars
-        390.7,     # Jupiter
-        793.3,     # Saturn
-        1692.7,    # Uranus
-        2702.7,    # Neptune
-        3648.3     # Pluto
-    ]
+	# Space data to graph: average distances from Earth to planets (in millions of km)
+	planets = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+	distances_miles = [
+		48.0,      # Mercury
+		25.7,      # Venus
+		48.7,      # Mars
+		390.7,     # Jupiter
+		793.3,     # Saturn
+		1692.7,    # Uranus
+		2702.7,    # Neptune
+		3648.3     # Pluto
+	]
 
-    # create the plot and set the size
-    fig, axis = plt.subplots(figsize=(8, 6), dpi=100)
-    
+	# create the plot and set the size
+	fig, axis = plt.subplots(figsize=(8, 6), dpi=100)
+	
  # ******** Customize ******** 
 	# Step 1: Customize the color of the bars on the graph 
 	# Example: axis.bar(planets, distances_miles, color="blue")
-    axis.bar(planets, distances_miles, color="")
+	axis.bar(planets, distances_miles, color="")
   
-    # Step 2: Set the title using axis.set_title("")    
-    # Example: axis.set_title("Average Distance from Earth to Planets")
-    axis.set_title("")
-    
-    # Step 3: Set the y label using axis.set_ylabel("")    
-    # Example: axis.set_ylabel("Distance (million miles)")
-    axis.set_ylabel("")
-    
-    # Step 4: Set the x label using axis.set_xlabel("")    
-    # Example: axis.set_xlabel("Planets")
-    axis.set_xlabel("")
+	# Step 2: Set the title using axis.set_title("")    
+	# Example: axis.set_title("Average Distance from Earth to Planets")
+	axis.set_title("")
+	
+	# Step 3: Set the y label using axis.set_ylabel("")    
+	# Example: axis.set_ylabel("Distance (million miles)")
+	axis.set_ylabel("")
+	
+	# Step 4: Set the x label using axis.set_xlabel("")    
+	# Example: axis.set_xlabel("Planets")
+	axis.set_xlabel("")
 
-    # Embed the plot in the tab
-    canvas = FigureCanvasTkAgg(fig, master=ds_tab)
-    canvas.draw()
-    canvas.get_tk_widget().pack(pady=10)
+	# Embed the plot in the tab
+	canvas = FigureCanvasTkAgg(fig, master=ds_tab)
+	canvas.draw()
+	canvas.get_tk_widget().pack(pady=10)
 
 
 ###########################################################################
@@ -133,67 +160,67 @@ def ds_build_space_graph():
 ###########################################################################
 
 def classify_space_object(description):
-    description = description.lower()
+	description = description.lower()
 # ******** Customize ********   
-    # Step 1 - read through descriptive lists
+	# Step 1 - read through descriptive lists
 
-    # Dictionaries of keywords that describe each planet
-    if any(word in description for word in ["rings", "ice giant", "cold", "yellow", "titan"]):
-        return "You're probably thinking of Saturn!"
-    
-    elif any(word in description for word in ["red", "dust", "iron", "rovers", "olympus", "dry", "thin atmosphere"]):
-        return "That sounds like Mars!"
-    
-    elif any(word in description for word in ["gas", "largest", "storm", "jovian", "great red spot", "many moons"]):
-        return "Could it be Jupiter?"
-    
-    elif any(word in description for word in ["blue", "methane", "cold", "far", "ice"]):
-        return "Maybe you're describing Neptune or Uranus!"
-    
-    elif any(word in description for word in ["craters", "lunar", "grey", "orbit earth", "tides"]):
-        return "Sounds like Earth's Moon!"
-    
-    elif any(word in description for word in ["hot", "bright", "plasma", "core", "fusion", "light", "sun"]):
-        return "You're probably describing the Sun!"
-    
-    elif any(word in description for word in ["burning", "nuclear", "dying", "red giant", "supernova", "nebula"]):
-        return "Sounds like you're talking about a star!"
-    
-    elif any(word in description for word in ["rocky", "closest", "venus", "hellish", "toxic"]):
-        return "Possibly Venus!"
-    
-    elif any(word in description for word in ["smallest", "closest", "speed", "mercury"]):
-        return "Maybe it's Mercury!"
-    
-    elif any(word in description for word in ["galaxy", "billions", "spiral", "milky way", "cluster"]):
-        return "You're thinking on a galactic scale! That must be a galaxy."
-    
-    elif any(word in description for word in ["belt", "asteroids", "rocky debris", "between mars and jupiter"]):
-        return "You’re probably thinking of the Asteroid Belt."
-    
-    elif any(word in description for word in ["ice", "tail", "orbit sun", "dirty snowball", "comet"]):
-        return "That sounds like a comet!"
+	# Dictionaries of keywords that describe each planet
+	if any(word in description for word in ["rings", "ice giant", "cold", "yellow", "titan"]):
+		return "You're probably thinking of Saturn!"
+	
+	elif any(word in description for word in ["red", "dust", "iron", "rovers", "olympus", "dry", "thin atmosphere"]):
+		return "That sounds like Mars!"
+	
+	elif any(word in description for word in ["gas", "largest", "storm", "jovian", "great red spot", "many moons"]):
+		return "Could it be Jupiter?"
+	
+	elif any(word in description for word in ["blue", "methane", "cold", "far", "ice"]):
+		return "Maybe you're describing Neptune or Uranus!"
+	
+	elif any(word in description for word in ["craters", "lunar", "grey", "orbit earth", "tides"]):
+		return "Sounds like Earth's Moon!"
+	
+	elif any(word in description for word in ["hot", "bright", "plasma", "core", "fusion", "light", "sun"]):
+		return "You're probably describing the Sun!"
+	
+	elif any(word in description for word in ["burning", "nuclear", "dying", "red giant", "supernova", "nebula"]):
+		return "Sounds like you're talking about a star!"
+	
+	elif any(word in description for word in ["rocky", "closest", "venus", "hellish", "toxic"]):
+		return "Possibly Venus!"
+	
+	elif any(word in description for word in ["smallest", "closest", "speed", "mercury"]):
+		return "Maybe it's Mercury!"
+	
+	elif any(word in description for word in ["galaxy", "billions", "spiral", "milky way", "cluster"]):
+		return "You're thinking on a galactic scale! That must be a galaxy."
+	
+	elif any(word in description for word in ["belt", "asteroids", "rocky debris", "between mars and jupiter"]):
+		return "You’re probably thinking of the Asteroid Belt."
+	
+	elif any(word in description for word in ["ice", "tail", "orbit sun", "dirty snowball", "comet"]):
+		return "That sounds like a comet!"
 # ******** Customize ********        
-    # Step 2 - think of words that describe Earth and list them here
-    # Example list of words: "ocean", "trees", "cities"
-    
-    # Step 3: add your words here and then remove the #
-    # Example: elif any(word in description for word in ["ocean", "trees", "cities"]):
-    #elif any(word in description for word in []):
-    
-    # Step 4 come up with text to alert the user that they have thought of Earth and add between the "" and remove the #
-    #	 Example: return "You must be thinking of Earth!"
-    #    return ""
-    
-    else:
-        return "I'm not sure... try giving more detail about the object."
+	# Step 2 - think of words that describe Earth and list them here
+	# Example list of words: "ocean", "trees", "cities"
+	
+	# Step 3: add your words here and then remove the #
+	# Example: elif any(word in description for word in ["ocean", "trees", "cities"]):
+	#elif any(word in description for word in []):
+	
+	# Step 4 come up with text to alert the user that they have thought of Earth and add between the "" and remove the #
+	#	 Example: return "You must be thinking of Earth!"
+	#    return ""
+	
+	else:
+		return "I'm not sure... try giving more detail about the object."
 
-        
+		
 # Button to classify
 def ai_classify():
-    user_input = txt_ai_question.get()
-    result = classify_space_object(user_input)
-    lbl_ds_result.configure(text=result)
+	user_input = txt_ai_question.get()
+	result = classify_space_object(user_input)
+	lbl_ds_result.configure(text=result)
 
 
 ###########################################################################
@@ -204,12 +231,16 @@ def ai_classify():
 cs_tab = tabview.tab("Advancing Computer Science")
 
 # form title
-lbl_cs_info_title = ctk.CTkLabel(cs_tab, text="Welcome to Computer Science!", font=("Segoe UI", 16))
+lbl_cs_info_title = ctk.CTkLabel(cs_tab, text="Welcome to Computer Science at UAT Space Central!", font=("Segoe UI", 16))
 lbl_cs_info_title.pack(pady=20)
 
 # subheading title
 lbl_cs_info_subheading = ctk.CTkLabel(cs_tab, text="Calculate the time needed to travel to space", font=("Segoe UI", 14, "bold"))
 lbl_cs_info_subheading.pack(pady=(20, 10))
+
+# error label
+lbl_cs_error = ctk.CTkLabel(cs_tab, text="", font=("Segoe UI", 14, "bold"), text_color="#FF0000")
+lbl_cs_error.pack(pady=(10, 10))
 
 # Distance input label
 lbl_cs_distance = ctk.CTkLabel(cs_tab, text="Enter Distance (miles):")
@@ -240,7 +271,7 @@ btn_cs_calc.pack(pady=10)
 ds_tab = tabview.tab("Data Science")
 
 # form title
-lbl_ds_info_title = ctk.CTkLabel(ds_tab, text="Welcome to Data Science!", font=("Segoe UI", 16))
+lbl_ds_info_title = ctk.CTkLabel(ds_tab, text="Welcome to Data Science at UAT Space Central!", font=("Segoe UI", 16))
 lbl_ds_info_title.pack(pady=10)
 
 # subheading title
@@ -259,7 +290,7 @@ btn_ds_plot.pack(pady=10)
 ai_tab = tabview.tab("Artificial Intelligence")
 
 # form title
-lbl_ai_info_title = ctk.CTkLabel(ai_tab, text="Welcome to Artificial Intelligence!", font=("Segoe UI", 16))
+lbl_ai_info_title = ctk.CTkLabel(ai_tab, text="Welcome to Artificial Intelligence at UAT Space Central!", font=("Segoe UI", 16))
 lbl_ai_info_title.pack(pady=20)
 
 # subheading title
