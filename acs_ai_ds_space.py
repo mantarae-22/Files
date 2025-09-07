@@ -93,9 +93,10 @@ def cs_calc_travel_to_space():
 	# Step 2: Get the speed that the user entered after calling a function to handle invalid inputs
 	#speed = validate_input(txt_cs_speed)
 
-	# Step 3: If distance and speed are great than 0, calculate the time it would take to travel using the formula: time = distance / speed
+	# If distance and speed are greater than 0
 	if (distance > 0 and speed > 0):
-		time_hours = distance / speed
+		# Step 3: calculate the time it would take to travel using the formula: time = distance / speed
+		#time_hours = distance / speed
 
 		# Step 4: Convert time from hours to days using the formula = time_days = time / 24
 		#time_days = time_hours / 24
@@ -312,3 +313,4 @@ btn_ds_classify.pack(pady=10)
 
 # Run the application
 app.mainloop()
+
